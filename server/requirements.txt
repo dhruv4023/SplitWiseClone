@@ -1,0 +1,7 @@
+pymongo
+django
+bson
+python-dotenv
+django-cors-headers
+gunicorn
+schedule
