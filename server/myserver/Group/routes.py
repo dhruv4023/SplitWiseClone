@@ -1,12 +1,12 @@
 
 from django.urls import path
-from myserver.Entries.controller import *
+from myserver.Group.controller import *
 
 
 urlpatterns = [
-    path('add/<str:u_id>', add_entries, name="addentries"),
-    path('delete/<str:u_id>', delete_entries, name="deleteentries"),
-    path('get/<str:u_id>/<str:startIndex>', get_entries, name="getentries"),
+    path('add/<str:uid>', add_group, name="addgroup"),
+    path('delete/<str:gid>/<str:uid>', delete_group, name="deletegroup"),
+    path('get/<str:u_id>/<str:gid>', get_group_data, name="getgroup"),
 ]
 
 

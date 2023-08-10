@@ -26,9 +26,6 @@ def add_group(request, uid):
 def delete_group(request, gid, uid):
     try:
         if request.method == 'DELETE':
-            body = json.loads(request.body)
-            splitWith = body.get("splitWith")
-            amt = body.get("amt")
             if removeGroup(id=gid, uid=uid):
                 return HttpResponse(json.dumps({"msg": "deleted "+gid}), content_type='application/json')
             else:
@@ -41,7 +38,7 @@ def delete_group(request, gid, uid):
 
 
 @csrf_exempt
-def get_group(request, gid):
+def get_group_data(request, gid):
     try:
         if request.method == 'GET':
             return HttpResponse(json.dumps({"group": getGroupData(gid=gid)}), content_type='application/json')
