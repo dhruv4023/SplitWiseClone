@@ -7,7 +7,7 @@ from django.contrib.auth.hashers import make_password, check_password
 
 @csrf_exempt
 def signUp(request):
-    try:
+    # try:
         if request.method == 'POST':
             body = json.loads(request.body)
             _id = body.get("_id")
@@ -15,15 +15,15 @@ def signUp(request):
             email = body.get('email')
             password = body.get('password')
             hashed_password = make_password(password)
+            # print("res")
             res = addNewuser(_id, name, email, hashed_password)
-            # print(res)
             if res:
-                return HttpResponse(json.dumps({"msg": "New user saved "}), content_type='application/json')
+                return HttpResponse(json.dumps({"msg": "Sign up successfully!"}), content_type='application/json')
             else:
-                return HttpResponse(json.dumps({"msg": "Failed to create user"}), content_type='application/json')
+                return HttpResponse(json.dumps({"msg": "User with "+_id+" Already Exist!"}), content_type='application/json')
 
-    except:
-        return HttpResponseServerError(json.dumps({"msg": "Server Error"}), content_type='application/json')
+    # except:
+    #     return HttpResponseServerError(json.dumps({"msg": "Server Error"}), content_type='application/json')
 
 
 @csrf_exempt
