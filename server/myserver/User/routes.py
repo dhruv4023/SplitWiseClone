@@ -1,12 +1,10 @@
 
 from django.urls import path
-from myserver.User.controller import *
+from myserver.User.controller import signUp,login,get_users_data_by_list_of_user_ids
 
 urlpatterns = [
     path('signup/', signUp, name="signUp"),
     path('login/', login, name="login"),
-    # path('verifyOtp/', verifyOtp, name="verifyOtp"),
-    # path('getcontact/', getContact, name="getcontact"),
-    # path('delcontact/<str:id>/', delContact, name="delcontact"),
+    path('getusersdata/', get_users_data_by_list_of_user_ids, name="getUsersData"),
 ]
 

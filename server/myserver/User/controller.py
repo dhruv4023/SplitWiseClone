@@ -1,7 +1,7 @@
 import json
 from django.http import HttpResponse, HttpResponseServerError, HttpResponseBadRequest
 from django.views.decorators.csrf import csrf_exempt
-from myserver.database.user import addNewuser, getUserDetails
+from myserver.database.user import addNewuser, getUserDetails,getUsersData
 from django.contrib.auth.hashers import make_password, check_password
 
 
@@ -60,4 +60,17 @@ def login(request):
 
     except:
         # if any error occurs than 
+        return HttpResponseServerError(json.dumps({"msg": "Server Error"}), content_type='application/json')
+
+@csrf_exempt
+def get_users_data_by_list_of_user_ids(request):
+    try:
+        if request.method == 'POST':
+            body = json.loads(request.body)
+            # print(body.get('user_ids'))
+            return HttpResponse(json.dumps({"group": getUsersData(user_ids=body.get('user_ids'))}), content_type='application/json')
+        else:
+            return HttpResponseBadRequest(json.dumps({"msg": "bad Request"}), content_type='application/json')
+
+    except:
         return HttpResponseServerError(json.dumps({"msg": "Server Error"}), content_type='application/json')
