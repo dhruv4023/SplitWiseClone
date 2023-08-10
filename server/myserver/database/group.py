@@ -20,5 +20,12 @@ def addNewGroup(userName: str, groupName: str):
     except:
         return False
 
-def removeGroup(id:str):
-    return groupData.delete_one({"_id":id}) and groups.delete_one({"_id":id})
+def removeGroup(id:str,uid:str):
+    query={"_id":id}
+    if groups.find_one(query)["groupCreatedBy"]==uid:
+        return groupData.delete_one(query) and groups.delete_one(query)
+    return False
+
+def getGroupData(gid:str):
+    query={"_id":gid}
+    return groups.find_one(query)

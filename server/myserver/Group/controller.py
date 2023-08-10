@@ -1,19 +1,16 @@
 import json
 from django.http import HttpResponse, HttpResponseServerError, HttpResponseBadRequest
 from django.views.decorators.csrf import csrf_exempt
-from myserver.database.groupData import *
+from myserver.database.group import *
 
 
 @csrf_exempt
-def add_entries(request, uid, gid):
+def add_group(request, uid):
     try:
         if request.method == 'POST':
             body = json.loads(request.body)
-            comment = body.get("comment")
-            splitWith = body.get("splitWith")
-            amt = body.get("amt")
-            x = addNewEntry(uid=uid, amt=amt, comment=comment,
-                            gid=gid, spliWith=splitWith)
+            groupName = body.get("groupName")
+            x = addNewGroup(groupName=groupName, userName=uid)
             if x:
                 return HttpResponse(json.dumps({"msg": "added"}), content_type='application/json')
             else:
@@ -26,16 +23,16 @@ def add_entries(request, uid, gid):
 
 
 @csrf_exempt
-def delete_entries(request, uid, gid, eid):
+def delete_group(request, gid, uid):
     try:
         if request.method == 'DELETE':
             body = json.loads(request.body)
             splitWith = body.get("splitWith")
             amt = body.get("amt")
-            if removeAnEntry(uid=uid, amt=amt, eid=eid, gid=gid, spliWith=splitWith):
-                return HttpResponse(json.dumps({"msg": "deleted "+eid}), content_type='application/json')
+            if removeGroup(id=gid, uid=uid):
+                return HttpResponse(json.dumps({"msg": "deleted "+gid}), content_type='application/json')
             else:
-                return HttpResponse(json.dumps({"msg": "failed to delete "+eid}), content_type='application/json')
+                return HttpResponse(json.dumps({"msg": "failed to delete "+gid}), content_type='application/json')
         else:
             return HttpResponseBadRequest(json.dumps({"msg": "bad Request"}), content_type='application/json')
 
@@ -44,10 +41,10 @@ def delete_entries(request, uid, gid, eid):
 
 
 @csrf_exempt
-def get_entries(request, gid, startIndex, limit=10):
+def get_group(request, gid):
     try:
         if request.method == 'GET':
-            return HttpResponse(json.dumps({"entries": getentries(gid=gid, startIndex=startIndex, limit=limit)}), content_type='application/json')
+            return HttpResponse(json.dumps({"group": getGroupData(gid=gid)}), content_type='application/json')
         else:
             return HttpResponseBadRequest(json.dumps({"msg": "bad Request"}), content_type='application/json')
 
