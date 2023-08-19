@@ -4,6 +4,7 @@ from datetime import datetime
 from pymongo import MongoClient
 from django.conf import settings
 import ssl
+from gridfs import GridFS
 
 
 DB_URL = "mongodb://localhost:27017"
@@ -23,3 +24,4 @@ db = client["SplitWise"]
 users = db["users"]
 groups = db["groups"]
 groupData = db["gropuData"]
+fs = GridFS(db, collection="imgs")

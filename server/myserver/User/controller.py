@@ -1,7 +1,7 @@
 import json
 from django.http import HttpResponse, HttpResponseServerError, HttpResponseBadRequest
 from django.views.decorators.csrf import csrf_exempt
-from myserver.database.user import addNewuser, getUserDetails,getUsersData
+from myserver.database.user import addNewuser, getUserDetails, getUsersData #, addImage, getImage
 from django.contrib.auth.hashers import make_password, check_password
 
 
@@ -12,6 +12,8 @@ from django.contrib.auth.hashers import make_password, check_password
 #   "email": "ab_e",
 #   "password": "pass"
 # }
+
+
 @csrf_exempt
 def signUp(request):
     try:
@@ -20,9 +22,11 @@ def signUp(request):
             _id = body.get("_id")
             name = body.get('name')
             email = body.get('email')
+            imgPath = body.get('imgPath')
             password = body.get('password')
             hashed_password = make_password(password)
-            res = addNewuser(_id, name, email, hashed_password) # calling function to add new user data
+            # calling function to add new user data
+            res = addNewuser(_id, name, email, hashed_password, imgPath)
             if res:
                 # addNewUser fun will return True if no other user exist with given _id
                 return HttpResponse(json.dumps({"msg": "Sign up successfully!"}), content_type='application/json')
@@ -31,7 +35,7 @@ def signUp(request):
                 return HttpResponse(json.dumps({"msg": "User with "+_id+" Already Exist!"}), content_type='application/json')
 
     except:
-        # if any error occurs than 
+        # if any error occurs than
         return HttpResponseServerError(json.dumps({"msg": "Server Error"}), content_type='application/json')
 
 
@@ -48,10 +52,12 @@ def login(request):
             _id = body.get("_id")
             email = body.get('email')
             password = body.get('password')
-            userData = getUserDetails(_id, email) # retrive data from database as per given user email or _id
+            # retrive data from database as per given user email or _id
+            userData = getUserDetails(_id, email)
             hashed_password = userData["password"]
             userData["password"] = None
-            password_valid = check_password(password, hashed_password) # inbuilt fun to verify the entered password with has password
+            # inbuilt fun to verify the entered password with has password
+            password_valid = check_password(password, hashed_password)
             if password_valid:
                 return HttpResponse(json.dumps({"msg": "Log in success", "userData": userData}), content_type='application/json')
             return HttpResponse(json.dumps({"msg": "Invalid Credentials"}), content_type='application/json')
@@ -59,8 +65,9 @@ def login(request):
             return HttpResponseBadRequest(json.dumps({"msg": "bad Request"}), content_type='application/json')
 
     except:
-        # if any error occurs than 
+        # if any error occurs than
         return HttpResponseServerError(json.dumps({"msg": "Server Error"}), content_type='application/json')
+
 
 @csrf_exempt
 def get_users_data_by_list_of_user_ids(request):
@@ -74,3 +81,14 @@ def get_users_data_by_list_of_user_ids(request):
 
     except:
         return HttpResponseServerError(json.dumps({"msg": "Server Error"}), content_type='application/json')
+
+
+# @csrf_exempt
+# def add_image(req):
+#     body = json.loads(req.body)
+#     return HttpResponse(json.dumps({"msg": addImage(path=body.get("imgPath"))}), content_type='application/json')
+
+# @csrf_exempt
+# def get_image(req,imgId):
+#     # return getImage(imgId=imgId)
+#     return HttpResponse(json.dumps({"msg":getImage(imgId=imgId)}), content_type='application/json')

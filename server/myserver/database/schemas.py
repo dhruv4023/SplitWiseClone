@@ -4,6 +4,7 @@ usersSchema = {
     "name": str,
     "email": str,
     "password": str,
+    # "imgId": str,
 }
 
 # schema for entriesMethods and archived collection
