@@ -6,7 +6,7 @@ from myserver.database.mongodb import *
 def addNewGroupDataDoc(id: str):
     doc = {
         "_id": id,
-        "groupMemberss": [],
+        "groupMembers": [],
         "entries":  [],
     }
     try:

@@ -15,6 +15,7 @@ def addNewGroup(userName: str, groupName: str, imgUrl: str):
     }
     try:
         validate_document(document=doc, schema=groupSchema)
+        # print(doc)
         if groups.insert_one(doc).inserted_id is not None and addNewGroupDataDoc(id):
             return True
         else:
@@ -38,4 +39,8 @@ def getGroupData(gid: str):
 
 def getGroupOfUser(uid: str):
     query = {"groupMembers.uid": uid}
-    return groupData.find(query, {"_id": 1})
+    data = [i["_id"] for i in (groupData.find(query, {"_id": 1}))]
+    return getAllGroupData(gids=data)
+
+def getAllGroupData(gids: list):
+    return [dt for dt in groups.find({"_id": {"$in":gids}})]
