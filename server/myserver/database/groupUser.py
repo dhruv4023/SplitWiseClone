@@ -5,7 +5,7 @@ from myserver.database.mongodb import *
 def addUserToGrp(uid: str, gid: str):
     doc = {
         "uid": uid,
-        "total": "0",
+        "total": 0,
     }
     try:
         validate_document(document=doc, schema=groupMemberSchema)
