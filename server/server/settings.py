@@ -153,6 +153,7 @@ ALLOWED_HOSTS = [
     "dhruv4023.vercel.app",
     "django-server-mysite.vercel.app",
     "django-server-s3gy.onrender.com",
+    '192.168.104.152'
 ]
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:3000",
