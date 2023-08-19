@@ -1,9 +1,8 @@
 from myserver.database.mongodb import *
 from myserver.database.groupData import addNewGroupDataDoc
+from myserver.database.groupUser import addUserToGrp
 
 # to add new document
-
-
 def addNewGroup(userName: str, groupName: str, imgUrl: str):
     id = generateId()
     doc = {
@@ -16,10 +15,11 @@ def addNewGroup(userName: str, groupName: str, imgUrl: str):
     try:
         validate_document(document=doc, schema=groupSchema)
         # print(doc)
-        if groups.insert_one(doc).inserted_id is not None and addNewGroupDataDoc(id):
+        if groups.insert_one(doc).inserted_id is not None and addNewGroupDataDoc(id) and addUserToGrp(gid=id,uid=userName):
             return True
         else:
             groups.delete_one({"_id": id})
+            groupData.delete_one({"_id": id})
             return False
     except:
         return False
