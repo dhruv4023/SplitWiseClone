@@ -12,7 +12,7 @@ DB_URL = "mongodb://localhost:27017"
 
 
 # adding not adding the security by Secure Socket Layer
-client = MongoClient(DB_URL, ssl_cert_reqs=ssl.CERT_NONE)
+client = MongoClient(DB_URL)
 
 # DB_URL = "mongodb://localhost:27017"
 
