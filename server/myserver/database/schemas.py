@@ -11,6 +11,7 @@ usersSchema = {
 groupSchema = {
     "_id": str,
     "groupName": str,
+    "imgUrl": str,
     "groupCreatedBy": str,
     "groupCreatedOn": str,
 }
