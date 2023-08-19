@@ -10,7 +10,8 @@ def add_group(request, uid):
         if request.method == 'POST':
             body = json.loads(request.body)
             groupName = body.get("groupName")
-            x = addNewGroup(groupName=groupName, userName=uid)
+            imgUrl = body.get("imgUrl")
+            x = addNewGroup(groupName=groupName, userName=uid,imgUrl=imgUrl)
             if x:
                 return HttpResponse(json.dumps({"msg": "added"}), content_type='application/json')
             else:
@@ -42,6 +43,18 @@ def get_group_data(request, gid):
     try:
         if request.method == 'GET':
             return HttpResponse(json.dumps({"group": getGroupData(gid=gid)}), content_type='application/json')
+        else:
+            return HttpResponseBadRequest(json.dumps({"msg": "bad Request"}), content_type='application/json')
+
+    except:
+        return HttpResponseServerError(json.dumps({"msg": "Server Error"}), content_type='application/json')
+
+
+@csrf_exempt
+def get_group_of_user(request, uid):
+    try:
+        if request.method == 'GET':
+            return HttpResponse(json.dumps({"groupOfuser": getGroupOfUser(uid=uid)}), content_type='application/json')
         else:
             return HttpResponseBadRequest(json.dumps({"msg": "bad Request"}), content_type='application/json')
 

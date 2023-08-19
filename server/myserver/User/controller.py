@@ -75,7 +75,7 @@ def get_users_data_by_list_of_user_ids(request):
         if request.method == 'POST':
             body = json.loads(request.body)
             # print(body.get('user_ids'))
-            return HttpResponse(json.dumps({"group": getUsersData(user_ids=body.get('user_ids'))}), content_type='application/json')
+            return HttpResponse(json.dumps({"users": getUsersData(user_ids=body.get('user_ids'))}), content_type='application/json')
         else:
             return HttpResponseBadRequest(json.dumps({"msg": "bad Request"}), content_type='application/json')
 
