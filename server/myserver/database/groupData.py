@@ -68,14 +68,14 @@ def incrementInTotalCollection(gid: str, uid: str, amt: int, spliWith: list):
 
 # to retrive entries
 def getEntries(gid: str, startIndex: int, limit: int):
-    print(startIndex,limit)
     query = {"_id": gid}
-    return groupData.find_one(query, {"groupMembers":0,"entries": {"$slice": [int(startIndex), int(limit)]}})
+    return groupData.find_one(query, {"groupMembers": 0, "entries": {"$slice": [int(startIndex), int(limit)]}})
+
 
 # to retrive groupMembers
 def getGroupMembers(gid: str):
     query = {"_id": gid}
-    return groupData.find_one(query, {"groupMembers":1})
+    return groupData.find_one(query, {"groupMembers": 1})
 
 
 # common updateOne function
