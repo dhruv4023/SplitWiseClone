@@ -1,8 +1,7 @@
 from myserver.database.mongodb import *
 
+
 # to add new document
-
-
 def addNewGroupDataDoc(id: str):
     doc = {
         "_id": id,
@@ -69,7 +68,7 @@ def incrementInTotalCollection(gid: str, uid: str, amt: int, spliWith: list):
 # to retrive entries
 def getEntries(gid: str, startIndex: int, limit: int):
     query = {"_id": gid}
-    return groupData.find_one(query, {"groupMembers": 0, "entries": {"$slice": [int(startIndex), int(limit)]}})
+    return groupData.find_one(query, {"groupMembers": 0, "entries": {"$slice": [startIndex, limit]}})
 
 
 # to retrive groupMembers
