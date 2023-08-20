@@ -7,6 +7,7 @@ urlpatterns = [
     path('add/<str:uid>/<str:gid>', add_entries, name="addentries"),
     path('delete/<str:uid>/<str:gid>/<str:eid>', delete_entries, name="deleteentries"),
     path('get/<str:gid>/<str:startIndex>/<str:limit>', get_entries, name="getentries"),
+    path('getgroupmemberdata/<str:gid>', get_getGroup_members_data, name="getgroupmemberdata"),
 ]
 
 

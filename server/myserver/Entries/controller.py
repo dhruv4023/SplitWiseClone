@@ -47,7 +47,18 @@ def delete_entries(request, uid, gid, eid):
 def get_entries(request, gid, startIndex, limit=10):
     try:
         if request.method == 'GET':
-            return HttpResponse(json.dumps({"data": getentries(gid=gid, startIndex=startIndex, limit=limit)}), content_type='application/json')
+            return HttpResponse(json.dumps({"data": getEntries(gid=gid, startIndex=startIndex, limit=limit)}), content_type='application/json')
+        else:
+            return HttpResponseBadRequest(json.dumps({"msg": "bad Request"}), content_type='application/json')
+
+    except:
+        return HttpResponseServerError(json.dumps({"msg": "Server Error"}), content_type='application/json')
+
+@csrf_exempt
+def get_getGroup_members_data(request, gid):
+    try:
+        if request.method == 'GET':
+            return HttpResponse(json.dumps({"data": getGroupMembers(gid=gid)}), content_type='application/json')
         else:
             return HttpResponseBadRequest(json.dumps({"msg": "bad Request"}), content_type='application/json')
 
