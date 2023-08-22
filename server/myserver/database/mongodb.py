@@ -7,7 +7,8 @@ import ssl
 from gridfs import GridFS
 
 
-DB_URL = "mongodb://127.0.0.1:27017"
+# DB_URL = "mongodb://127.0.0.1:27017"
+DB_URL = "mongodb+srv://dhruv4023:Azbxcz123@cluster0.imexjta.mongodb.net/"
 # DB_URL = settings.DB_URL
 
 
