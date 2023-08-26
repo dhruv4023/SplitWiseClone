@@ -14,19 +14,21 @@ def getDateTimeUniqueNumber():
 
     return formatted_date.replace("-", "")+formatted_time.replace(":", "")
 
+
 def getUniqueId():
     return int(time.time()*10000)
 
-import time 
-ABCD="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+ABCD = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+
 def generateId():
-    x = str(int(time.time()*100000))
-    t=""
-    time.sleep(0.0000005)
+    x = str(int(time.time()*1000000))
+    t = ""
+    time.sleep(0.000000000000000000000000000000000005)
     for i in range(len(x)//2-3):
-        # print(x[i*2:i*2+2])
-        t+=ABCD[int(x[i*2:i*2+2])%26]
-    return t+x[11:]
+        t += ABCD[int(x[i*2:i*2+2]) % 26]
+    return t + x[11:]
 # zz=[]
 # print(generateId())
 # for i in range(100):
